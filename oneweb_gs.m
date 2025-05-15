@@ -42,21 +42,21 @@ validSamples = 0;
 logData.Time = ts';
 logData.DualAccessSatIndices = cell(length(ts), 1);  % Each cell will store sat indices with dual access
 
+% Create access objects once outside the time loop
+melbAccess = access(sats, gsMelbourne);
+sydAccess = access(sats, gsSydney);
+
+melbAccess.LineColor = 'red';
+melbAccess.LineWidth = 3;
+sydAccess.LineColor = 'blue';
+sydAccess.LineWidth = 3;
+
 for tIdx = 1:length(ts)
     t = ts(tIdx);
     currentTime = datetime(t, 'Format', 'yyyy-MM-dd HH:mm:ss');
     fprintf('Current Date and Time is %s \n', currentTime);
 
     dualAccessSats = [];  % List of satellite indices with dual access at this time step
-
-    % Create access objects once outside the time loop
-    melbAccess = access(sats, gsMelbourne);
-    sydAccess = access(sats, gsSydney);
-
-    melbAccess.LineColor = 'red';
-    melbAccess.LineWidth = 3;
-    sydAccess.LineColor = 'blue';
-    sydAccess.LineWidth = 3;
 
 
     for i = 1:Param.TNSats
@@ -106,3 +106,6 @@ fprintf('✅ logData saved to DualAccessLog.csv\n');
 %% === Visualize Satellite Constellation
 v = satelliteScenarioViewer(sc);
 play(sc, PlaybackSpeedMultiplier=100);
+
+
+%load('OneWebSatelliteScenariov2.mat');play(sc);
