@@ -1,4 +1,4 @@
-%% Initialize data collection with cross-link consideration to define the matrices size
+%% Initialize data collection
 fprintf('Starting first pass to count valid samples (with cross-links)...\n');
 validSamples = 0;
 
@@ -65,34 +65,6 @@ for tIdx = 1:length(ts)
         end
     end
 
-    %% Check LEO ↔ GEO GS (Cross-Link)
-    if ~sampleHasAccess
-        for i = 1:leoNum
-            for gsIdx = 1:numel(geoGsList)
-                if accessStatus(leoToGeoAccess{i, gsIdx}, t)
-                    fprintf('  CROSS: LEO-%d to GEO GS %s at %s\n', i, geoGsList{gsIdx}.Name, datestr(t));
-                    sampleHasAccess = true;
-                    break;
-                end
-            end
-            if sampleHasAccess, break; end
-        end
-    end
-
-    %% Check GEO ↔ LEO GS (Cross-Link)
-    if ~sampleHasAccess
-        for i = 1:geoNum
-            for gsIdx = 1:numel(leoGsList)
-                if accessStatus(geoToLeoAccess{i, gsIdx}, t)
-                    fprintf('  CROSS: GEO-%d to LEO GS %s at %s\n', i, leoGsList{gsIdx}.Name, datestr(t));
-                    sampleHasAccess = true;
-                    break;
-                end
-            end
-            if sampleHasAccess, break; end
-        end
-    end
-
     %% Count valid sample
     if sampleHasAccess
         validSamples = validSamples + 1;
@@ -101,12 +73,11 @@ end
 fprintf('First pass complete. Found %d valid samples with any access.\n', validSamples);
 
 %% Pre-allocate data structures
-fprintf('Pre-allocating data structures (including cross-links)...\n');
+fprintf('Pre-allocating data structures...\n');
 logData = struct();
 logData.Time = NaT(validSamples, 1);
 logData.GEO = struct();
 logData.LEO = struct();
-logData.Cross = struct();
 
 % GEO satellites
 for i = 1:geoNum
@@ -128,24 +99,6 @@ for i = 1:leoNum
     logData.LEO(i).Access = zeros(validSamples, numel(leoGsList));
     logData.LEO(i).SNR = NaN(validSamples, numel(leoGsList));
     logData.LEO(i).RSSI = NaN(validSamples, numel(leoGsList));
-end
-
-% Cross-links: LEO → GEO GS
-for i = 1:leoNum
-    logData.Cross.LEO2GEO(i).Name = leoSats(i).Name;
-    logData.Cross.LEO2GEO(i).Access = zeros(validSamples, numel(geoGsList));
-    logData.Cross.LEO2GEO(i).SINR = NaN(validSamples, numel(geoGsList));
-    logData.Cross.LEO2GEO(i).RSSI = NaN(validSamples, numel(geoGsList));
-    logData.Cross.LEO2GEO(i).Frequency = zeros(validSamples, 1);
-end
-
-% Cross-links: GEO → LEO GS
-for i = 1:geoNum
-    logData.Cross.GEO2LEO(i).Name = geoSats{i}.Name;
-    logData.Cross.GEO2LEO(i).Access = zeros(validSamples, numel(leoGsList));
-    logData.Cross.GEO2LEO(i).SINR = NaN(validSamples, numel(leoGsList));
-    logData.Cross.GEO2LEO(i).RSSI = NaN(validSamples, numel(leoGsList));
-    logData.Cross.GEO2LEO(i).Frequency = zeros(validSamples, 1);
 end
 
 % Time-series SNR per satellite
