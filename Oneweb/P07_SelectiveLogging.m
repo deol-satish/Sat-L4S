@@ -85,7 +85,11 @@ for tIdx = 1:length(ts)
                     snr = rssi - 10*log10(kb*tempK*channelBW);
                     logData.LEO(i).RSSI(sampleCount, gsIdx) = rssi;
                     logData.LEO(i).SNR(sampleCount, gsIdx) = snr;
-                    fprintf('    LEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB\n', i, leoGsList{gsIdx}.Name, rssi, snr);
+                    throughput = channelBW * log2(1 + 10^(snr/10)); % in bits/s
+                    logData.LEO(i).Thrpt(sampleCount, gsIdx) = throughput;
+
+
+                    fprintf('    LEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB, Throughput=%.2f Mbit/s\n', i, leoGsList{gsIdx}.Name, rssi, snr, (throughput/1024));
                 else
                     fprintf('    LEO-%d to %s: No access\n', i, leoGsList{gsIdx}.Name);
                 end
@@ -117,7 +121,8 @@ for tIdx = 1:length(ts)
                     snr = rssi - 10*log10(kb*tempK*channelBW);
                     logData.GEO(i).RSSI(sampleCount, gsIdx) = rssi;
                     logData.GEO(i).SNR(sampleCount, gsIdx) = snr;
-                    fprintf('    GEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB\n', i, leoGsList{gsIdx}.Name, rssi, snr);
+                    logData.GEO(i).Thrpt(sampleCount, gsIdx) = throughput;
+                    fprintf('    GEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB, Throughput=%.2f Mbit/s\n', i, geoGsList{gsIdx}.Name, rssi, snr, (throughput/1024));
                 else
                     fprintf('    GEO-%d to %s: No access\n', i, geoGsList{gsIdx}.Name);
                 end
