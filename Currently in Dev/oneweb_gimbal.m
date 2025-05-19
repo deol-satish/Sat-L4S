@@ -165,7 +165,7 @@ for i = 1:numel(leoSats)
     tx = transmitter(leoSats(i), 'Frequency', channelFreqs(1), 'Power', leoPower);
     gaussianAntenna(tx, 'DishDiameter', leoAntenna);
     pattern(tx);  % Optional: plot the radiation pattern
-    LeoTx{i} = tx;
+    LeoTx(i) = tx;
 end
 
 %% Receivers on Ground Stations
@@ -338,9 +338,9 @@ for tIdx = 1:length(ts)
     % First check if any LEO has access to any ground station
     for i = 1:numel(leoSats)
         for gsIdx = 1:numel(leoGsList)
-            %lac = access(leoSats(i), leoGsList{gsIdx});
-            %lac.LineColor = 'red';
-            %lac.LineWidth = 3;
+            lac = access(leoSats(i), leoGsList{gsIdx});
+            lac.LineColor = 'red';
+            lac.LineWidth = 3;
             if accessStatus(lac, t)
                 leoAccess = true;
                 accessDetails = sprintf('LEO-%d to %s', i, leoGsList{gsIdx}.Name);
@@ -390,20 +390,20 @@ for tIdx = 1:length(ts)
             logData.LEO(i).Frequency(sampleCount) = currentLEOFreqs(i);
             
             % Update transmitter frequency for this LEO
-            tx = leoTx{i};
+            tx = LeoTx(i);
             tx.Frequency = currentLEOFreqs(i);
             %pattern(tx);
             
             % Check access and calculate metrics for each ground station
             for gsIdx = 1:numel(leoGsList)
-                %lac = access(leoSats(i), leoGsList{gsIdx});
+                lac = access(leoSats(i), leoGsList{gsIdx});
                 %lac.LineColor = 'red';
                 %lac.LineWidth = 3;
                 acc = accessStatus(lac, t);
                 logData.LEO(i).Access(sampleCount, gsIdx) = acc;
                 
                 %if acc
-                if true
+                if acc
 
                     % Calculate link metrics
                     linkLEO = link(tx, rxReceivers_LEO(leoGsList{gsIdx}.Name));
@@ -457,7 +457,7 @@ for tIdx = 1:length(ts)
                 logData.GEO(i).Access(sampleCount, gsIdx) = acc;
                 
                 %if acc
-                if true
+                if acc
 
                     % Calculate link metrics
                     linkGEO = link(geoTx{i}, rxReceivers_GEO(geoGsList{gsIdx}.Name));
@@ -490,7 +490,7 @@ for tIdx = 1:length(ts)
                     % Interference from each LEO
                     intfPowerSum_W = 0;
                     for j = 1:numel(leoSats)
-                        txLEO = leoTx{j};
+                        txLEO = LeoTx(j);
                         intfFreq = txLEO.Frequency;
                         intfBW = channelBW; 
                     

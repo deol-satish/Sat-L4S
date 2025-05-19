@@ -1,0 +1,96 @@
+%% Minimal Second Pass for Logging Access + Position
+fprintf('Starting second pass to log positions and access...\n');
+sampleIdx = 1;
+for tIdx = 1:length(ts)
+    t = ts(tIdx);
+    sampleHasAccess = false;
+    %% Check if any access exists (same logic as first pass)
+    for i = 1:leoNum
+        for gsIdx = 1:numel(leoGsList)
+            lac = access(leoSats{i}, leoGsList{gsIdx});
+            if accessStatus(lac, t)
+                sampleHasAccess = true;
+                break;
+            end
+        end
+        if sampleHasAccess, break; end
+    end
+    if ~sampleHasAccess
+        for i = 1:geoNum
+            for gsIdx = 1:numel(geoGsList)
+                gac = access(geoSats{i}, geoGsList{gsIdx});
+                if accessStatus(gac, t)
+                    sampleHasAccess = true;
+                    break;
+                end
+            end
+            if sampleHasAccess, break; end
+        end
+    end
+
+    if ~sampleHasAccess
+        for i = 1:leoNum
+            for gsIdx = 1:numel(geoGsList)
+                lacross = access(leoSats{i}, geoGsList{gsIdx});
+                if accessStatus(lacross, t)
+                    sampleHasAccess = true;
+                    break;
+                end
+            end
+            if sampleHasAccess, break; end
+        end
+    end
+    if ~sampleHasAccess
+        for i = 1:geoNum
+            for gsIdx = 1:numel(leoGsList)
+                gcross = access(geoSats{i}, leoGsList{gsIdx});
+                if accessStatus(gcross, t)
+                    sampleHasAccess = true;
+                    break;
+                end
+            end
+            if sampleHasAccess, break; end
+        end
+    end
+
+    %% If access occurred, log data
+    if sampleHasAccess
+        logData.Time(sampleIdx) = t;
+
+        for i = 1:leoNum
+            state = states(leoSats{i}, t, 'CoordinateFrame', 'geographic');
+            logData.LEO(i).Latitude(sampleIdx) = state(1,1);
+            logData.LEO(i).Longitude(sampleIdx) = mod(state(2,1), 360);
+
+            for gsIdx = 1:numel(leoGsList)
+                lac = access(leoSats{i}, leoGsList{gsIdx});
+                logData.LEO(i).Access(sampleIdx, gsIdx) = accessStatus(lac, t);
+            end
+
+            for gsIdx = 1:numel(geoGsList)
+                lacross = access(leoSats{i}, geoGsList{gsIdx});
+                logData.Cross.LEO2GEO(i).Access(sampleIdx, gsIdx) = accessStatus(lacross, t);
+            end
+        end
+
+        for i = 1:geoNum
+            state = states(geoSats{i}, t, 'CoordinateFrame', 'geographic');
+            logData.GEO(i).Latitude(sampleIdx) = state(1,1);
+            logData.GEO(i).Longitude(sampleIdx) = mod(state(2,1), 360);
+
+            for gsIdx = 1:numel(geoGsList)
+                gac = access(geoSats{i}, geoGsList{gsIdx});
+                logData.GEO(i).Access(sampleIdx, gsIdx) = accessStatus(gac, t);
+            end
+
+            for gsIdx = 1:numel(leoGsList)
+                gcross = access(geoSats{i}, leoGsList{gsIdx});
+                logData.Cross.GEO2LEO(i).Access(sampleIdx, gsIdx) = accessStatus(gcross, t);
+            end
+        end
+
+        sampleIdx = sampleIdx + 1;
+    end
+end
+
+fprintf('Second pass complete. %d time steps logged.\n', sampleIdx - 1);
