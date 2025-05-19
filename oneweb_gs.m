@@ -77,31 +77,6 @@ end
 save('OneWebSatelliteScenariov2.mat', 'sc');
 
 
-% Initialize cell arrays for table
-numEntries = length(logData.Time);
-TimeStr = strings(numEntries, 1);            % For formatted timestamps
-AccessSatStr = strings(numEntries, 1);       % For satellite indices as strings
-
-for i = 1:numEntries
-    TimeStr(i) = datestr(logData.Time(i), 'yyyy-mm-dd HH:MM:SS');
-    satIndices = logData.DualAccessSatIndices{i};
-    
-    if ~isempty(satIndices)
-        AccessSatStr(i) = strjoin(string(satIndices), ',');  % Convert indices to comma-separated string
-    else
-        AccessSatStr(i) = "";  % No access
-    end
-end
-
-% Create table
-logTable = table(TimeStr, AccessSatStr, 'VariableNames', {'Time', 'SatelliteIndices'});
-
-% Write to CSV
-writetable(logTable, 'DualAccessLogv2.csv');
-
-fprintf('✅ logData saved to DualAccessLog.csv\n');
-
-
 
 %% === Visualize Satellite Constellation
 v = satelliteScenarioViewer(sc);
