@@ -36,6 +36,7 @@ end
 %     'OrbitPropagator', 'two-body-keplerian');
 
 % Use Walker Star configuration (Phase offset = 0)
+fprintf('Creating LEO Walker-Star constellation...\n');
 leoSats = walkerStar(sc, Elem.a, Elem.Inc, Param.TNSats, Param.NPln, 0);
 set(leoSats, 'ShowLabel', true);
 

@@ -9,8 +9,8 @@ semiMajorAxis = Re + altitude;  % Total semi-major axis
 inclination = 53;               % Inclination in degrees
 
 %% === Constellation Configuration
-numPlanes = 72;       % Number of orbital planes
-satsPerPlane = 22;    % Satellites per plane
+numPlanes = 32;       % Number of orbital planes
+satsPerPlane = 50;    % Satellites per plane
 totalSats = numPlanes * satsPerPlane;
 walkerPhase = 1;      % Walker Delta phase offset
 
