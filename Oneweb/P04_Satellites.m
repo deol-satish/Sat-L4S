@@ -21,7 +21,7 @@ for i = 1:geoNum
     % pointAt(geoTxGimbals{i}, geoGsList{i});
 end
 %% Create LEO Satellites (Walker-Delta Constellation)
-fprintf('Creating LEO Walker-Delta constellation...\n');
+% fprintf('Creating LEO Walker-Delta constellation...\n');
 
 
 

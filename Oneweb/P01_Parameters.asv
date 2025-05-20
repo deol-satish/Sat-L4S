@@ -31,10 +31,8 @@ baseFreq = 1.5e9;          % Base frequency in Hz
 % In particular, the 10.7-12.7 and 12.75-
 % 14.5 GHz band will be used for the downlink and uplink
 % user communications respectively
-% From, A Technical Comparison of Three Low Earth Orbit Satellite 
-% Constellation Systems to Provide Global
+% From, A Technical Comparison of Three Low Earth Orbit Satellite Constellation Systems to Provide Global
 % Broadband
-
 %% For DownLink
 channelBW = 250e6;  % Each channel 250 MHz wide, typical in Ku-band
 % Start from 10.7 GHz and space them evenly

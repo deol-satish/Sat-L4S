@@ -73,7 +73,7 @@ for tIdx = 1:length(ts)
                 acc = accessStatus(access(leoSats(i), leoGsList{gsIdx}), t);
                 logData.LEO(i).Access(sampleCount, gsIdx) = acc;
                 if acc
-                    [~, Pwr_dBW] = sigstrength(linkObj, t);
+                    [~, Pwr_dBW] = sigstrength(linkObj, t); % accounts for FSPL, antenna gains, and system loss
                     [~, el, ~] = aer(rxReceivers_LEO(leoGsList{gsIdx}.Name), leoSats(i), t);
                     cfg = p618Config; cfg.Frequency = max(baseFreq, 4e9);
                     cfg.ElevationAngle = max(el, 5);
@@ -88,8 +88,23 @@ for tIdx = 1:length(ts)
                     throughput = channelBW * log2(1 + 10^(snr/10)); % in bits/s
                     logData.LEO(i).Thrpt(sampleCount, gsIdx) = throughput;
 
+                    snrLinear = 10^(snr / 10); % Convert dB to linear scale
 
-                    fprintf('    LEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB, Throughput=%.2f Mbit/s\n', i, leoGsList{gsIdx}.Name, rssi, snr, (throughput/1024));
+                    % QPSK BER
+                    berQPSK = qfunc(sqrt(2 * snrLinear));
+                    
+                    % M-QAM BER (e.g., M = 16 for 16-QAM)
+                    M = 16;
+                    berMQAM = (4 / log2(M)) * (1 - 1 / sqrt(M)) * qfunc(sqrt(3 * snrLinear / (M - 1)));
+                    
+                    % Store in logData
+                    logData.LEO(i).BER_QPSK(sampleCount, gsIdx) = berQPSK;
+                    logData.LEO(i).BER_MQAM(sampleCount, gsIdx) = berMQAM;
+
+
+                    fprintf('    LEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB, Throughput=%.2f Mbit/s, BER(QPSK)=%.2e, BER(MQAM)=%.2e\n', ...
+                        i, leoGsList{gsIdx}.Name, rssi, snr, (throughput/(1024*1024)), berQPSK, berMQAM);
+
                 else
                     fprintf('    LEO-%d to %s: No access\n', i, leoGsList{gsIdx}.Name);
                 end
