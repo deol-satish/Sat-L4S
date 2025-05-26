@@ -88,6 +88,7 @@ for i = 1:geoNum
     logData.GEO(i).Access = zeros(validSamples, numel(geoGsList));
     logData.GEO(i).SNR = NaN(validSamples, numel(geoGsList));
     logData.GEO(i).RSSI = NaN(validSamples, numel(geoGsList));
+    logData.GEO(i).Thrpt = NaN(validSamples, numel(geoGsList));
 end
 
 % LEO satellites
@@ -99,6 +100,8 @@ for i = 1:leoNum
     logData.LEO(i).Access = zeros(validSamples, numel(leoGsList));
     logData.LEO(i).SNR = NaN(validSamples, numel(leoGsList));
     logData.LEO(i).RSSI = NaN(validSamples, numel(leoGsList));
+    logData.LEO(i).BER_QPSK = NaN(validSamples, numel(leoGsList));
+    logData.LEO(i).BER_MQAM = NaN(validSamples, numel(leoGsList));
 end
 
 % Time-series SNR per satellite
