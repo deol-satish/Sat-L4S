@@ -1,0 +1,11 @@
+Parameter,Value
+Number of Satellites,1
+Longitudes,"150°, 160°, 170° E"
+Altitude,"35,786 km"
+Semi-major Axis,35786e3 + Re m
+GEO Antenna Diameter,3.0 m
+GEO Tx Power (W),300 W
+GEO Tx Power (dBW),24.77 dBW
+Base Frequency,1.5 GHz
+Channel Bandwidth,200 kHz
+Channel Frequencies,1.498875–1.502125 GHz (10 channels)

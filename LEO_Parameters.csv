@@ -1,0 +1,26 @@
+Parameter,OneWeb,Spacex (Shell-1)
+Start Time,10/04/2025 12:00,10/04/2025 12:00
+Duration,1800 sec (30 min),1800 sec (30 min)
+Sample Time,60 sec,60 sec
+Earth Radius,"6,371,000 m","6,371,000 m"
+Channel Bandwidth,250 MHz,250 MHz
+Downlink Frequencies (User Comm),10.7–12.7 GHz,10.7–12.5 GHz
+Uplink Frequencies (User Comm),12.75–14.5 GHz,14.0–14.5 GHz
+Downlink Frequencies (Gateway Comm),17.8–20.2 GHz,17.8–19.3 GHz
+Uplink Frequencies (Gateway Comm),27.5–30.0 GHz,27.5–30.0 GHz
+LEO Power (W),20,20
+LEO Power (dBW),13.01 dBW,13.01 dBW
+LEO Satellite Antenna Dish Diameter,0.5 m,0.5 m
+GEO Satellite Antenna Dish Diameter,3.0 m,3.0 m
+Ground Station Antenna DIsh Diameter,2.4 m,2.4 m
+Model,Rician,Rician
+Rician K-factor,10 dB,10 dB
+Boltzmann Constant,1.38e-23 J/K,1.38e-23 J/K
+System Temperature,293 K,293 K
+Altitude,650 km,550 km
+Semi-major Axis,650e3 + Re m,550e3 + Re m
+Inclination,87.9°,53°
+Orbital Planes,18,72
+Satellites per Plane,40,22
+Total Satellites,720,1584
+Phase Offset,0,1
