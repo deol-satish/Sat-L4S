@@ -76,7 +76,7 @@ sma_geo = 35786e3 + EarthRadius;             % GEO semi-major axis [m] (altitude
 
 %% LEO Walker-Star
 %% === Parameters
-E = wgs84Ellipsoid;
+% E = wgs84Ellipsoid;
 Re = 6371000;  % Earths mean radius in meters
 
 Param.h = 1200e3;  % OneWeb altitude ~1200 km

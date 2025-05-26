@@ -1,0 +1,48 @@
+#Pwr_dbW is in dbW 
+[~, Pwr_dBW] = sigstrength(linkObj, t); % accounts for FSPL, antenna gains, and system loss
+
+
+
+
+atmosLoss = p618PropagationLosses(cfg).At;
+rssi = Pwr_dBW - atmosLoss; % in dbW
+
+# channelBW should be in Hz
+snr = rssi - 10*log10(kb*tempK*channelBW); % in dbW
+
+####################################################################################################################################################
+
+To convert **dBW SNR** (decibel-Watt SNR) to **linear SNR**, you need to reverse the logarithmic conversion. The formula to do this is:
+
+$$
+\text{SNR}_{\text{linear}} = 10^{\frac{\text{SNR}_{\text{dBW}}}{10}}
+$$
+
+### Explanation:
+
+* **SNR (dBW)** is the logarithmic expression of the ratio of signal power to noise power.
+* To find the **linear SNR**, you exponentiate the decibel value divided by 10.
+
+### Example:
+
+Suppose you have an SNR of **20 dBW**:
+
+$$
+\text{SNR}_{\text{linear}} = 10^{\frac{20}{10}} = 10^2 = 100
+$$
+
+So, an **SNR of 20 dBW** corresponds to a **linear SNR of 100**.
+
+### General Steps:
+
+1. Take the value of **SNR in dBW**.
+2. Divide it by 10.
+3. Raise 10 to the power of the result.
+
+This will give you the linear SNR ratio.
+
+####################################################################################################################################################
+throughput = channelBW * log2(1 + 10^(snr/10)); % in bits/s
+
+
+snrLinear = 10^(snr / 10); % Convert dB to linear scale

@@ -11,12 +11,16 @@ inclination = 53;               % Inclination in degrees
 %% === Constellation Configuration
 numPlanes = 32;       % Number of orbital planes
 satsPerPlane = 50;    % Satellites per plane
+
+numPlanes = 72;       % Number of orbital planes
+satsPerPlane = 22;    % Satellites per plane
+
 totalSats = numPlanes * satsPerPlane;
 walkerPhase = 1;      % Walker Delta phase offset
 
 %% === Simulation Time
 sampleTime = 60;      % 60 seconds
-startTime = datetime(2025,3,6,15,0,0);
+startTime = datetime(2025,3,6,5,0,0);
 stopTime  = startTime + hours(1);
 
 %% === Satellite Scenario

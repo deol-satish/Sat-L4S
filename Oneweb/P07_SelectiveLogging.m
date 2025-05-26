@@ -1,6 +1,9 @@
 %% Full Simulation Loop with Logging for All Link Types
 sampleCount = 0;
 warning('off', 'all');
+
+% Save to a MAT file
+save('save_bw_channels.mat', 'channelBW', 'channelFreqs');
 for tIdx = 1:length(ts)
     t = ts(tIdx);
     fprintf('\nProcessing time step %d/%d: %s\n', tIdx, length(ts), char(t));
@@ -81,8 +84,8 @@ for tIdx = 1:length(ts)
                     cfg.Longitude = leoGsList{gsIdx}.Longitude;
                     cfg.TotalAnnualExceedance = 0.001;
                     atmosLoss = p618PropagationLosses(cfg).At;
-                    rssi = Pwr_dBW - atmosLoss;
-                    snr = rssi - 10*log10(kb*tempK*channelBW);
+                    rssi = Pwr_dBW - atmosLoss; % in dbW
+                    snr = rssi - 10*log10(kb*tempK*channelBW); % in dbW
                     logData.LEO(i).RSSI(sampleCount, gsIdx) = rssi;
                     logData.LEO(i).SNR(sampleCount, gsIdx) = snr;
                     throughput = channelBW * log2(1 + 10^(snr/10)); % in bits/s
@@ -102,8 +105,8 @@ for tIdx = 1:length(ts)
                     logData.LEO(i).BER_MQAM(sampleCount, gsIdx) = berMQAM;
 
 
-                    fprintf('    LEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB, Throughput=%.2f Mbit/s, BER(QPSK)=%.2e, BER(MQAM)=%.2e\n', ...
-                        i, leoGsList{gsIdx}.Name, rssi, snr, (throughput/(1024*1024)), berQPSK, berMQAM);
+                    fprintf('    LEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB, Throughput=%.2f bit/s, BER(QPSK)=%.2e, BER(MQAM)=%.2e\n', ...
+                        i, leoGsList{gsIdx}.Name, rssi, snr, (throughput), berQPSK, berMQAM);
 
                 else
                     fprintf('    LEO-%d to %s: No access\n', i, leoGsList{gsIdx}.Name);
@@ -137,7 +140,7 @@ for tIdx = 1:length(ts)
                     logData.GEO(i).RSSI(sampleCount, gsIdx) = rssi;
                     logData.GEO(i).SNR(sampleCount, gsIdx) = snr;
                     logData.GEO(i).Thrpt(sampleCount, gsIdx) = throughput;
-                    fprintf('    GEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB, Throughput=%.2f Mbit/s\n', i, geoGsList{gsIdx}.Name, rssi, snr, (throughput/1024));
+                    fprintf('    GEO-%d to %s: RSSI=%.2f dBm, SNR=%.2f dB, Throughput=%.2f bit/s\n', i, geoGsList{gsIdx}.Name, rssi, snr, (throughput));
                 else
                     fprintf('    GEO-%d to %s: No access\n', i, geoGsList{gsIdx}.Name);
                 end

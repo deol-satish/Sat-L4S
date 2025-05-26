@@ -9,7 +9,7 @@ Param.NPln = 18;   % Number of orbital planes
 Param.NSat = 40;    % Satellites per plane
 Param.TNSats = Param.NPln * Param.NSat;
 Param.sampleTime = 60;
-startTime = datetime(2025,3,6,15,0,0);
+startTime = datetime(2025,3,6,5,0,0);
 stopTime  = startTime + hours(1);
 
 %% === Satellite Scenario
