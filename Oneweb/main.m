@@ -28,7 +28,7 @@ P07_SelectiveLogging
 fprintf('\nPreparing data for CSV export...\n');
 P08_SaveData
 writetable(csvData, 'Satellite_Australia_Simulation_Log.csv');
-fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log.csv\n', validSamples);
+fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log_oneweb_freq_bw_250mhz.csv\n', validSamples);
 %% Play Simulation
 %fprintf('\nStarting visualization...\n');
 %v = satelliteScenarioViewer(sc);
@@ -37,7 +37,7 @@ fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log.csv
 fprintf('=== Simulation Complete ===\n');
 %% Save Simulation State
 fprintf('\nSaving simulation scenario and log data...\n');
-save('SatelliteSimulationState.mat', 'sc', 'logData', 'geoSats', 'leoSats', 'geoGsList', 'leoGsList', 'geoTx', 'leoTx', 'snrTimeline');
+save('SatelliteSimulationState_oneweb_freq_bw_250mhz.mat', 'sc', 'logData', 'geoSats', 'leoSats', 'geoGsList', 'leoGsList', 'geoTx', 'leoTx', 'snrTimeline');
 fprintf('Simulation state saved to SatelliteSimulationState.mat\n');
 %% Load Simulation State
 fprintf('\nLoading simulation scenario data...\n');
