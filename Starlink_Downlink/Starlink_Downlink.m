@@ -29,8 +29,8 @@ P07_SelectiveLogging
 %% Save Data to CSV (only valid samples)
 fprintf('\nPreparing data for CSV export...\n');
 P08_SaveData
-writetable(csvData, 'Satellite_Australia_Simulation_Log_starlink.csv');
-fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log_starlink.csv\n', validSamples);
+writetable(csvData, 'Satellite_Australia_Simulation_Log_starlink_downlink.csv');
+fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log_starlink_downlink.csv\n', validSamples);
 %% Play Simulation
 %fprintf('\nStarting visualization...\n');
 %v = satelliteScenarioViewer(sc);
@@ -39,11 +39,11 @@ fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log_sta
 fprintf('=== Simulation Complete ===\n');
 %% Save Simulation State
 fprintf('\nSaving simulation scenario and log data...\n');
-save('SatelliteSimulationState_starlink.mat', 'sc', 'logData', 'leoSats', 'leoGsList', 'leoRx');
-fprintf('Simulation state saved to SatelliteSimulationState_starlink.mat\n');
+save('SatelliteSimulationState_starlink_downlink.mat', 'sc', 'logData', 'leoSats', 'leoGsList', 'leoTx');
+fprintf('Simulation state saved to SatelliteSimulationState_starlink_downlink.mat\n');
 %% Load Simulation State
 fprintf('\nLoading simulation scenario data...\n');
-load('SatelliteSimulationState_starlink.mat');
+load('SatelliteSimulationState_starlink_downlink.mat');
 v = satelliteScenarioViewer(sc);
 v.ShowDetails = true;
 play(sc, 'PlaybackSpeedMultiplier', 100);
