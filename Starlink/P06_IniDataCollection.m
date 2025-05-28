@@ -22,10 +22,10 @@ for j = 1:numel(leoGsList)
     leoToLeoAccess{j}.LineWidth = 3;
     
     % Get access intervals table
-    leoToLeoAccessIntervals = accessIntervals(leoToLeoAccess{j});
+    leoToLeoAccessIntervals{j} = accessIntervals(leoToLeoAccess{j});
     
     % Extract 'Source' values that match pattern "_number"
-    sourceNames = leoToLeoAccessIntervals.Source;  % Cell array of names
+    sourceNames = leoToLeoAccessIntervals{j}.Source;  % Cell array of names
     for k = 1:length(sourceNames)
         name = sourceNames{k};
         tokens = regexp(name, '_([0-9]+)$', 'tokens');  % Match trailing _number
