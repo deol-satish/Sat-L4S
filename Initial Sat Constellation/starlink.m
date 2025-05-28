@@ -41,4 +41,3 @@ viewer = satelliteScenarioViewer(sc);
 % campos(viewer, 37.7749, -122.4194, 200e5);
 
 play(sc, PlaybackSpeedMultiplier = 100);
-hj
