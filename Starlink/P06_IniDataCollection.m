@@ -11,11 +11,6 @@ for i = 1:leoNum
         leoToLeoAccess{i,j}.LineColor = 'red';
         leoToLeoAccess{i,j}.LineWidth = 3;
     end
-    for j = 1:numel(geoGsList)
-        leoToGeoAccess{i,j} = access(leoSats(i), geoGsList{j});
-        leoToGeoAccess{i,j}.LineColor = 'magenta';
-        leoToGeoAccess{i,j}.LineWidth = 2;
-    end
 end
 
 % First pass to count valid samples

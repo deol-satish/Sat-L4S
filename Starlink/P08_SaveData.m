@@ -15,6 +15,11 @@ for i = 1:leoNum
         csvData.(sprintf('LEO%d_%s_Access', i, gsName)) = logData.LEO(i).Access(:, gsIdx);
         csvData.(sprintf('LEO%d_%s_SNR_dB', i, gsName)) = logData.LEO(i).SNR(:, gsIdx);
         csvData.(sprintf('LEO%d_%s_RSSI_dBm', i, gsName)) = logData.LEO(i).RSSI(:, gsIdx);
+
+        % New data
+        csvData.(sprintf('LEO%d_%s_Throughput', i, gsName)) = logData.LEO(i).Thrpt(:, gsIdx);
+        csvData.(sprintf('LEO%d_%s_BER_QPSK', i, gsName)) = logData.LEO(i).BER_QPSK(:, gsIdx);
+        csvData.(sprintf('LEO%d_%s_BER_MQAM', i, gsName)) = logData.LEO(i).BER_MQAM(:, gsIdx);
         
     end
 end
