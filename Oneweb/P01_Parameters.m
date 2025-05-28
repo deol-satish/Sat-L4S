@@ -83,7 +83,7 @@ Param.h = 1200e3;  % OneWeb altitude ~1200 km
 Elem.a = Re + Param.h;
 Elem.Inc = 87.9;   % Near-polar inclination
 Param.NPln = 18;   % Number of orbital planes
-Param.NSat = 40;    % Satellites per plane
+Param.NSat = 49;    % Satellites per plane
 Param.TNSats = Param.NPln * Param.NSat;
 Param.sampleTime = 60; % second sampling time
 
@@ -91,7 +91,7 @@ leoNum = Param.NPln * Param.NSat;
 
 % Temp assignment for Dev
 Param.NPln = 18;
-Param.NSat = 40;
+Param.NSat = 49;
 
 
 

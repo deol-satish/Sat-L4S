@@ -24,7 +24,7 @@ end
 fprintf('Initializing simulation parameters...\n');
 startTime = datetime(2025,4,10,12,0,0);
 duration_sec = 60 * 5;     % simulation duration in seconds
-sampleTime = 1;            % second sampling time
+sampleTime = 60;            % second sampling time
 stopTime = startTime + seconds(duration_sec);
 
 % Frequencies (GHz)
@@ -34,12 +34,12 @@ channelFreqs = 1e9 * [1.498875, 1.500125, 1.500375, 1.500625, 1.500875, ...
                       1.501125, 1.501375, 1.501625, 1.501875, 1.502125]; % 10 channels
 
 %% For DownLink
-channelBW = 250e6;  % Each channel 250 MHz wide, typical in Ku-band
-% Start from 10.7 GHz and space them evenly
-channelFreqs = 1e9 * (10.7 : 0.2 : 12.5);  % 10 channels in Ku downlink band
+% channelBW = 250e6;  % Each channel 250 MHz wide, typical in Ku-band
+% % Start from 10.7 GHz and space them evenly
+% channelFreqs = 1e9 * (10.7 : 0.2 : 12.5);  % 10 channels in Ku downlink band
 
 % Power (dBW)
-leoPower = 10*log10(50);  % 20 W in dBW
+leoPower = 10*log10(20);  % 20 W in dBW
 
 % Antennas (m)
 leoAntenna = 0.5;      % LEO antenna diameter
@@ -290,7 +290,6 @@ for tIdx = 1:length(ts)
                 %if acc
                 if acc
                     pointAt(rxGimbals_LEO(leoGsList{gsIdx}.Name), leoSats(i));
-                    pointAt(leoSats(i), rxGimbals_LEO(leoGsList{gsIdx}.Name));
                     % Calculate link metrics
                     linkLEO = link(tx, rxReceivers_LEO(leoGsList{gsIdx}.Name));
                     [~, Pwr_dBW] = sigstrength(linkLEO, t);
@@ -385,8 +384,6 @@ end
 fprintf('\nSaving simulation scenario and log data...\n');
 save('SatelliteSimulationState.mat', 'sc', 'logData',  'leoSats', 'leoGsList', 'leoTx', 'snrTimeline');
 fprintf('Simulation state saved to SatelliteSimulationState.mat\n');
-
-save('SatelliteScenarioViz.mat', 'sc')
 
 %% Load Simulation State
 fprintf('\nLoading simulation scenario data...\n');
