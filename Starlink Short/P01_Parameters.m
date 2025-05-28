@@ -59,7 +59,7 @@ tempK = 293;                      % System noise temperature [K]
 %% LEO Walker-Delta Constellation Parameters
 walker.a = 547e3 + EarthRadius;     % Semi-major axis: 650 km altitude
 walker.Inc = 53;                  % Inclination in degrees (typical for Starlink)
-walker.NPlanes = 8;               % Number of orbital planes (original 18)
-walker.SatsPerPlane = 8;          % Number of satellites per plane (original 49)
+walker.NPlanes = 72;               % Number of orbital planes (original 18)
+walker.SatsPerPlane = 22;          % Number of satellites per plane (original 49)
 walker.PhaseOffset = 1;            % Phase offset for phasing between planes
 leoNum = walker.NPlanes * walker.SatsPerPlane;

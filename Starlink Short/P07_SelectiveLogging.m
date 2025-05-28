@@ -19,7 +19,8 @@ for tIdx = tStartIdx:length(ts)
     currentLEOFreqs = leoFreqMatrix(:, tIdx);
     % fprintf('  Selected LEO frequencies: %s MHz\n', mat2str(currentLEOFreqs/1e6));
     %% Check and log access using cached access objects
-    for i = 1:leoNum
+    for si = 1:length(uniqueSatIDs)
+        i = uniqueSatIDs(si);
         for gsIdx = 1:numel(leoGsList)
             if accessStatus(access(leoSats(i), leoGsList{gsIdx}), t)
                 sampleHasAccess = true;
@@ -33,7 +34,8 @@ for tIdx = tStartIdx:length(ts)
         sampleCount = sampleCount + 1;
         logData.Time(sampleCount) = t;
         %% LEO → LEO GS
-        for i = 1:leoNum
+        for si = 1:length(uniqueSatIDs)
+            i = uniqueSatIDs(si);
             tx = leoTx{i}; tx.Frequency = currentLEOFreqs(i);
             [pos, ~] = states(leoSats(i), t, 'CoordinateFrame', 'geographic');
             logData.LEO(i).Latitude(sampleCount) = pos(1);

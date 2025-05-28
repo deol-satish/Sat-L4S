@@ -3,16 +3,49 @@ fprintf('Starting first pass to count valid samples (with cross-links)...\n');
 validSamples = 0;
 
 % Cache access objects to avoid recomputation
-leoToLeoAccess = cell(leoNum, numel(leoGsList));
 
-for i = 1:leoNum
-    for j = 1:numel(leoGsList)
-        leoToLeoAccess{i,j} = access(leoSats(i), leoGsList{j});
-        fprintf('  LEO-%d to LEO GS %s\n', i, leoGsList{j}.Name);
-        leoToLeoAccess{i,j}.LineColor = 'red';
-        leoToLeoAccess{i,j}.LineWidth = 3;
+
+leoToLeoAccess = cell(numel(leoGsList));
+
+leoToLeoAccessIntervals = cell(numel(leoGsList));
+
+
+uniqueSatIDs = [];  % Initialize list to hold all satellite IDs with access
+
+for j = 1:numel(leoGsList)
+    % Create access object between all satellites and current GS
+    leoToLeoAccess{j} = access(leoSats, leoGsList{j});
+    fprintf('LEO GS %s\n', leoGsList{j}.Name);
+    
+    % Set visualization options (optional)
+    leoToLeoAccess{j}.LineColor = 'red';
+    leoToLeoAccess{j}.LineWidth = 3;
+    
+    % Get access intervals table
+    leoToLeoAccessIntervals = accessIntervals(leoToLeoAccess{j});
+    
+    % Extract 'Source' values that match pattern "_number"
+    sourceNames = leoToLeoAccessIntervals.Source;  % Cell array of names
+    for k = 1:length(sourceNames)
+        name = sourceNames{k};
+        tokens = regexp(name, '_([0-9]+)$', 'tokens');  % Match trailing _number
+        if ~isempty(tokens)
+            satNum = str2double(tokens{1}{1});
+            uniqueSatIDs(end+1) = satNum;  % Append to list
+        end
     end
 end
+
+% Remove duplicates and sort
+uniqueSatIDs = unique(uniqueSatIDs);
+
+% Display result
+fprintf('Unique LEO Satellite IDs with access:\n');
+disp(uniqueSatIDs);
+
+
+
+
 
 validSamples = length(ts); % Assume all samples are valid initially
 fprintf('First pass complete. Found %d timesteps samples with any access.\n', length(ts));
