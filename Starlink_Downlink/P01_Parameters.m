@@ -46,6 +46,7 @@ channelFreqs = 1e9 * (10.7 : 0.2 : 12.7);  % 10 channels in Ku downlink band
 
 %% Transmit Power (in dBW)
 leoPower = 10 * log10(20);   % LEO Tx power: 20 W → ~13.01 dBW
+leoPower = 10 % in Watts
 %% Antenna Parameters (Dish Diameter in meters)
 leoAntenna = 0.5;     % LEO satellite antenna diameter
 gsAntenna = 0.5;      % Ground station antenna diameter

@@ -36,21 +36,29 @@ for tIdx = tStartIdx:length(ts)
         %% LEO → LEO GS
         for si = 1:length(uniqueSatIDs)
             i = uniqueSatIDs(si);
-            tx = leoTx{i}; tx.Frequency = currentLEOFreqs(i);
+            tx = txTransmitters_LEO(leoGsList{gsIdx}.Name);
+            tx.Frequency = currentLEOFreqs(i);
+            rx = leoRx{i};
+
+
+
             [pos, ~] = states(leoSats(i), t, 'CoordinateFrame', 'geographic');
             logData.LEO(i).Latitude(sampleCount) = pos(1);
             logData.LEO(i).Longitude(sampleCount) = pos(2);
             logData.LEO(i).Frequency(sampleCount) = currentLEOFreqs(i);
             % fprintf('  LEO-%d Links (%.6f GHz):\n', i, currentLEOFreqs(i)/1e9);
             for gsIdx = 1:numel(leoGsList)
-                pointAt(rxGimbals_LEO(leoGsList{gsIdx}.Name), leoSats(i));
+
+                pointAt(txGimbals_LEO(leoGsList{gsIdx}.Name), leoSats(i));
                 pointAt(leoSats(i), leoGsList{gsIdx});
-                linkObj = link(tx, rxReceivers_LEO(leoGsList{gsIdx}.Name));
+
+
+                linkObj = link(txTransmitters_LEO(leoGsList{gsIdx}.Name), rx);
                 acc = accessStatus(access(leoSats(i), leoGsList{gsIdx}), t);
                 logData.LEO(i).Access(sampleCount, gsIdx) = acc;
                 if acc
                     [~, Pwr_dBW] = sigstrength(linkObj, t); % accounts for FSPL, antenna gains, and system loss
-                    [~, el, ~] = aer(rxReceivers_LEO(leoGsList{gsIdx}.Name), leoSats(i), t);
+                    [~, el, ~] = aer(txTransmitters_LEO(leoGsList{gsIdx}.Name), leoSats(i), t);
                     cfg = p618Config; cfg.Frequency = max(baseFreq, 4e9);
                     cfg.ElevationAngle = max(el, 5);
                     cfg.Latitude = leoGsList{gsIdx}.Latitude;
