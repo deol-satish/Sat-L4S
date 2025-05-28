@@ -20,7 +20,7 @@ fprintf('Initializing simulation parameters...\n');
 startTime = datetime(2025, 4, 10, 12, 0, 0);  % Simulation start
 startTime = datetime(2025, 4, 10, 12, 0, 0, 'TimeZone', 'Australia/Sydney');  % Start time in Sydney local time
 duration_sec = 60 * 30;                   % 30 min simulation in seconds
-sampleTime = 1;                             % Time step in seconds
+sampleTime = 30;                             % Time step in seconds
 stopTime = startTime + seconds(duration_sec);
 ts = startTime:seconds(sampleTime):stopTime;
 %% Frequencies (Hz)
