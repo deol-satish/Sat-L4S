@@ -23,11 +23,25 @@ sampleTime = 60;                             % Time step in seconds
 stopTime = startTime + seconds(duration_sec);
 ts = startTime:seconds(sampleTime):stopTime;
 %% Frequencies (Hz)
-baseFreq = 1.5e9;          % Base frequency in Hz
-channelBW = 200e3;         % Channel bandwidth in Hz
-channelFreqs = 1e9 * [...
-    1.498875, 1.500125, 1.500375, 1.500625, 1.500875, ...
-    1.501125, 1.501375, 1.501625, 1.501875, 1.502125];  % 10 narrow channels
+
+
+% In particular, the 10.7-12.7 and 14.0- 14.5 GHz band will be used for the user downlink and uplink communications
+% user communications respectively
+% From, A Technical Comparison of Three Low Earth Orbit Satellite 
+% Constellation Systems to Provide Global
+% Broadband
+
+
+% baseFreq = 1.5e9;          % Base frequency in Hz
+
+%% For DownLink
+channelBW = 250e6;  % Each channel 250 MHz wide, typical in Ku-band
+% Start from 10.7 GHz and space them evenly
+channelFreqs = 1e9 * (10.7 : 0.2 : 12.7);  % 10 channels in Ku downlink band
+
+% %% For Uplink
+% channelBW = 250e6;  % 250 MHz
+% channelFreqs = 1e9 * (14.0 : 0.05 : 14.5);  % 10 channels across uplink
 
 % Uncomment for interference testing (same frequency reuse)
 % channelFreqs = 1.5e9 * ones(1,10);
@@ -46,11 +60,11 @@ EarthRadius = earthRadius;        % Use MATLAB Aerospace Toolbox Earth radius [m
 kb = physconst('Boltzmann');      % Boltzmann constant [J/K]
 tempK = 293;                      % System noise temperature [K]
 %% LEO Walker-Delta Constellation Parameters
-walker.a = 650e3 + EarthRadius;     % Semi-major axis: 650 km altitude
-walker.Inc = 87.9;                  % Inclination in degrees (typical for OneWeb)
-walker.NPlanes = 18;               % Number of orbital planes (original 18)
-walker.SatsPerPlane = 20;          % Number of satellites per plane (original 49)
-walker.PhaseOffset = 1;            % Phase offset for phasing between planes
+walker.a = 547e3 + EarthRadius;     % Semi-major axis: 650 km altitude
+walker.Inc = 53;                  % Inclination in degrees (typical for Starlink)
+walker.NPlanes = 72;               % Number of orbital planes (original 18)
+walker.SatsPerPlane = 22;          % Number of satellites per plane (original 49)
+walker.PhaseOffset = 0;            % Phase offset for phasing between planes
 leoNum = walker.NPlanes * walker.SatsPerPlane;
 %% GEO Satellite Parameters
 geoNum = 1;                                  % Number of GEO satellites (adjust as needed)

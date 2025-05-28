@@ -14,6 +14,7 @@ fprintf('Defining ground stations for each Sat...\n');
 P03_SStations
 %% Create Satellites
 P04_Satellites
+save('mySatelliteScenario_starlink.mat', 'sc');
 % satelliteScenarioViewer(sc);
 % play(sc,PlaybackSpeedMultiplier=100);
 % play(sc)
@@ -28,8 +29,8 @@ P07_SelectiveLogging
 %% Save Data to CSV (only valid samples)
 fprintf('\nPreparing data for CSV export...\n');
 P08_SaveData
-writetable(csvData, 'Satellite_Australia_Simulation_Log.csv');
-fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log.csv\n', validSamples);
+writetable(csvData, 'Satellite_Australia_Simulation_Log_starlink.csv');
+fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log_starlink.csv\n', validSamples);
 %% Play Simulation
 %fprintf('\nStarting visualization...\n');
 %v = satelliteScenarioViewer(sc);
@@ -38,11 +39,11 @@ fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log.csv
 fprintf('=== Simulation Complete ===\n');
 %% Save Simulation State
 fprintf('\nSaving simulation scenario and log data...\n');
-save('SatelliteSimulationState.mat', 'sc', 'logData', 'geoSats', 'leoSats', 'geoGsList', 'leoGsList', 'geoTx', 'leoTx', 'snrTimeline');
-fprintf('Simulation state saved to SatelliteSimulationState.mat\n');
+save('SatelliteSimulationState_starlink.mat', 'sc', 'logData', 'geoSats', 'leoSats', 'geoGsList', 'leoGsList', 'geoTx', 'leoTx', 'snrTimeline');
+fprintf('Simulation state saved to SatelliteSimulationState_starlink.mat\n');
 %% Load Simulation State
 fprintf('\nLoading simulation scenario data...\n');
-load('SatelliteSimulationState.mat');
+load('SatelliteSimulationState_starlink.mat');
 v = satelliteScenarioViewer(sc);
 v.ShowDetails = true;
 play(sc, 'PlaybackSpeedMultiplier', 100);
