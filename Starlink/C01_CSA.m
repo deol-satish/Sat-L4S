@@ -1,4 +1,4 @@
-%% Satellite Simulation: GEO + LEO over Australia
+%% Satellite Simulation: LEO over Australia
 clear; clc;close all hidden
 fprintf('=== Starting Satellite Simulation ===\n');
 %% Load Parameters
@@ -9,7 +9,7 @@ sc = satelliteScenario(startTime, stopTime, sampleTime);
 %% Ground Stations in Australia
 fprintf('Setting up ground stations in Australia...\n');
 P02_GStations
-%% Create GEO and LEO ground statsions
+%% Create LEO ground statsions
 fprintf('Defining ground stations for each Sat...\n');
 P03_SStations
 %% Create Satellites
@@ -39,7 +39,7 @@ fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log_sta
 fprintf('=== Simulation Complete ===\n');
 %% Save Simulation State
 fprintf('\nSaving simulation scenario and log data...\n');
-save('SatelliteSimulationState_starlink.mat', 'sc', 'logData', 'geoSats', 'leoSats', 'geoGsList', 'leoGsList', 'geoTx', 'leoTx', 'snrTimeline');
+save('SatelliteSimulationState_starlink.mat', 'sc', 'logData', 'leoSats', 'leoGsList', 'leoTx', 'snrTimeline');
 fprintf('Simulation state saved to SatelliteSimulationState_starlink.mat\n');
 %% Load Simulation State
 fprintf('\nLoading simulation scenario data...\n');
@@ -62,12 +62,6 @@ for i = 1:leoNum
     legendEntries{end+1} = sprintf('LEO-%d', i);
 end
 
-% Plot GEO SNR
-for i = 1:geoNum
-    h = plot(snrTimeline.Time, snrTimeline.(sprintf('GEO%d', i)), '-x');
-    plotHandles(end+1) = h;
-    legendEntries{end+1} = sprintf('GEO-%d', i);
-end
 
 xlabel('Time'); ylabel('Avg SNR (dB)');
 title('Replay: SNR Over Time');

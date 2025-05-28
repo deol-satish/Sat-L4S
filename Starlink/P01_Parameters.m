@@ -43,14 +43,10 @@ channelFreqs = 1e9 * (10.7 : 0.2 : 12.7);  % 10 channels in Ku downlink band
 % channelBW = 250e6;  % 250 MHz
 % channelFreqs = 1e9 * (14.0 : 0.05 : 14.5);  % 10 channels across uplink
 
-% Uncomment for interference testing (same frequency reuse)
-% channelFreqs = 1.5e9 * ones(1,10);
 %% Transmit Power (in dBW)
-geoPower = 10 * log10(300);  % GEO Tx power: 300 W → ~24.77 dBW
 leoPower = 10 * log10(20);   % LEO Tx power: 20 W → ~13.01 dBW
 %% Antenna Parameters (Dish Diameter in meters)
 leoAntenna = 0.5;     % LEO satellite antenna diameter
-geoAntenna = 3.0;     % GEO satellite antenna diameter
 gsAntenna = 2.4;      % Ground station antenna diameter
 %% Multi-path Fading Parameters
 fadingModel = 'Rician';    % Options: 'None', 'Rayleigh', 'Rician'
@@ -66,7 +62,3 @@ walker.NPlanes = 72;               % Number of orbital planes (original 18)
 walker.SatsPerPlane = 22;          % Number of satellites per plane (original 49)
 walker.PhaseOffset = 0;            % Phase offset for phasing between planes
 leoNum = walker.NPlanes * walker.SatsPerPlane;
-%% GEO Satellite Parameters
-geoNum = 1;                                  % Number of GEO satellites (adjust as needed)
-geoLongitudes = [150, 160, 170];             % GEO longitudes [deg E]
-sma_geo = 35786e3 + EarthRadius;             % GEO semi-major axis [m] (altitude + radius)

@@ -15,43 +15,7 @@ for tIdx = 1:length(ts)
         end
         if sampleHasAccess, break; end
     end
-    if ~sampleHasAccess
-        for i = 1:geoNum
-            for gsIdx = 1:numel(geoGsList)
-                gac = access(geoSats{i}, geoGsList{gsIdx});
-                if accessStatus(gac, t)
-                    sampleHasAccess = true;
-                    break;
-                end
-            end
-            if sampleHasAccess, break; end
-        end
-    end
-
-    if ~sampleHasAccess
-        for i = 1:leoNum
-            for gsIdx = 1:numel(geoGsList)
-                lacross = access(leoSats{i}, geoGsList{gsIdx});
-                if accessStatus(lacross, t)
-                    sampleHasAccess = true;
-                    break;
-                end
-            end
-            if sampleHasAccess, break; end
-        end
-    end
-    if ~sampleHasAccess
-        for i = 1:geoNum
-            for gsIdx = 1:numel(leoGsList)
-                gcross = access(geoSats{i}, leoGsList{gsIdx});
-                if accessStatus(gcross, t)
-                    sampleHasAccess = true;
-                    break;
-                end
-            end
-            if sampleHasAccess, break; end
-        end
-    end
+    
 
     %% If access occurred, log data
     if sampleHasAccess
@@ -67,26 +31,7 @@ for tIdx = 1:length(ts)
                 logData.LEO(i).Access(sampleIdx, gsIdx) = accessStatus(lac, t);
             end
 
-            for gsIdx = 1:numel(geoGsList)
-                lacross = access(leoSats{i}, geoGsList{gsIdx});
-                logData.Cross.LEO2GEO(i).Access(sampleIdx, gsIdx) = accessStatus(lacross, t);
-            end
-        end
-
-        for i = 1:geoNum
-            state = states(geoSats{i}, t, 'CoordinateFrame', 'geographic');
-            logData.GEO(i).Latitude(sampleIdx) = state(1,1);
-            logData.GEO(i).Longitude(sampleIdx) = mod(state(2,1), 360);
-
-            for gsIdx = 1:numel(geoGsList)
-                gac = access(geoSats{i}, geoGsList{gsIdx});
-                logData.GEO(i).Access(sampleIdx, gsIdx) = accessStatus(gac, t);
-            end
-
-            for gsIdx = 1:numel(leoGsList)
-                gcross = access(geoSats{i}, leoGsList{gsIdx});
-                logData.Cross.GEO2LEO(i).Access(sampleIdx, gsIdx) = accessStatus(gcross, t);
-            end
+            
         end
 
         sampleIdx = sampleIdx + 1;

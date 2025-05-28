@@ -2,22 +2,6 @@
 csvData = table();
 csvData.Time = logData.Time;
 
-% Add GEO data
-for i = 1:geoNum
-    fprintf('  Adding GEO-%d data to CSV structure\n', i);
-    csvData.(sprintf('GEO%d_Name', i)) = repmat(logData.GEO(i).Name, validSamples, 1);
-    csvData.(sprintf('GEO%d_Lat', i)) = logData.GEO(i).Latitude;
-    csvData.(sprintf('GEO%d_Lon', i)) = logData.GEO(i).Longitude;
-    csvData.(sprintf('GEO%d_Freq_Hz', i)) = logData.GEO(i).Frequency;
-    
-    for gsIdx = 1:numel(geoGsList)
-        gsName = strrep(geoGsList{gsIdx}.Name, ' ', '_');
-        csvData.(sprintf('GEO%d_%s_Access', i, gsName)) = logData.GEO(i).Access(:, gsIdx);
-        csvData.(sprintf('GEO%d_%s_SNR_dB', i, gsName)) = logData.GEO(i).SNR(:, gsIdx);
-        csvData.(sprintf('GEO%d_%s_RSSI_dBm', i, gsName)) = logData.GEO(i).RSSI(:, gsIdx);
-    end
-end
-
 % Add LEO data
 for i = 1:leoNum
     fprintf('  Adding LEO-%d data to CSV structure\n', i);
@@ -31,6 +15,7 @@ for i = 1:leoNum
         csvData.(sprintf('LEO%d_%s_Access', i, gsName)) = logData.LEO(i).Access(:, gsIdx);
         csvData.(sprintf('LEO%d_%s_SNR_dB', i, gsName)) = logData.LEO(i).SNR(:, gsIdx);
         csvData.(sprintf('LEO%d_%s_RSSI_dBm', i, gsName)) = logData.LEO(i).RSSI(:, gsIdx);
+        
     end
 end
 % Write to CSV

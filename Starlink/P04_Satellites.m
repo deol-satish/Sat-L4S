@@ -1,26 +1,4 @@
 %% P04_Satellites
-%% Create GEO Satellites
-fprintf('Creating GEO satellites...\n');
-geoSats = [];
-geoTx = cell(1, geoNum);
-geoTxGimbals = cell(1, geoNum); % Gimbals (used for directional antennas to track ground stations)
-for i = 1:geoNum
-    fprintf('  Creating GEO satellite %d at %d°E longitude\n', i, geoLongitudes(i));
-    geoSats{i} = satellite(sc, sma_geo, 0, 0, 0, 0, geoLongitudes(i), ...
-        'Name', sprintf('GEO-%d', i), 'OrbitPropagator', 'two-body-keplerian');
-    geoSats{i}.MarkerColor = [0.9290 0.6940 0.1250];  % Orange
-    
-    % Add gimbal for pointing at ground stations
-    geoTxGimbals{i} = gimbal(geoSats{i});
-    
-    % Create transmitter mounted on gimbal
-    tx = transmitter(geoTxGimbals{i}, 'Frequency', baseFreq, 'Power', geoPower, 'SystemLoss', 1.0);
-    gaussianAntenna(tx, 'DishDiameter', geoAntenna);
-    geoTx{i} = tx;
-
-    % Point gimbal at all GS (for now, point at 1st GS)
-    % pointAt(geoTxGimbals{i}, geoGsList{i});
-end
 %% Create LEO Satellites (Walker-Delta Constellation)
 fprintf('Creating LEO Walker-Delta constellation...\n');
 
