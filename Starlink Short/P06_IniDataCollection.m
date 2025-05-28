@@ -8,35 +8,14 @@ leoToLeoAccess = cell(leoNum, numel(leoGsList));
 for i = 1:leoNum
     for j = 1:numel(leoGsList)
         leoToLeoAccess{i,j} = access(leoSats(i), leoGsList{j});
+        fprintf('  LEO-%d to LEO GS %s\n', i, leoGsList{j}.Name);
         leoToLeoAccess{i,j}.LineColor = 'red';
         leoToLeoAccess{i,j}.LineWidth = 3;
     end
 end
 
-% First pass to count valid samples
-for tIdx = 1:length(ts)
-    t = ts(tIdx);
-    sampleHasAccess = false;
-
-    %% Check LEO ↔ LEO GS
-    for i = 1:leoNum
-        for gsIdx = 1:numel(leoGsList)
-            if accessStatus(leoToLeoAccess{i, gsIdx}, t)
-                fprintf('  LEO-%d to LEO GS %s at %s\n', i, leoGsList{gsIdx}.Name, datestr(t));
-                sampleHasAccess = true;
-                break;
-            end
-        end
-        if sampleHasAccess, break; end
-    end
-
-    %% Count valid sample
-    if sampleHasAccess
-        validSamples = validSamples + 1;
-    end
-end
-fprintf('First pass complete. Found %d valid samples with any access.\n', validSamples);
-
+validSamples = length(ts); % Assume all samples are valid initially
+fprintf('First pass complete. Found %d timesteps samples with any access.\n', length(ts));
 %% Pre-allocate data structures
 fprintf('Pre-allocating data structures (including cross-links)...\n');
 logData = struct();
@@ -46,6 +25,7 @@ logData.LEO = struct();
 
 % LEO satellites
 for i = 1:leoNum
+fprintf(' Processing  LEO-%d \n', i);
     logData.LEO(i).Name = leoSats(i).Name;
     logData.LEO(i).Latitude = zeros(validSamples, 1);
     logData.LEO(i).Longitude = zeros(validSamples, 1);
