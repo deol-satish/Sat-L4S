@@ -39,7 +39,7 @@ fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log_sta
 fprintf('=== Simulation Complete ===\n');
 %% Save Simulation State
 fprintf('\nSaving simulation scenario and log data...\n');
-save('SatelliteSimulationState_starlink.mat', 'sc', 'logData', 'leoSats', 'leoGsList', 'leoTx', 'snrTimeline');
+save('SatelliteSimulationState_starlink.mat', 'sc', 'logData', 'leoSats', 'leoGsList', 'leoTx');
 fprintf('Simulation state saved to SatelliteSimulationState_starlink.mat\n');
 %% Load Simulation State
 fprintf('\nLoading simulation scenario data...\n');
@@ -48,25 +48,4 @@ v = satelliteScenarioViewer(sc);
 v.ShowDetails = true;
 play(sc, 'PlaybackSpeedMultiplier', 100);
 fprintf('=== Simulation Load Complete ===\n');
-%% plot
-figure;
-hold on;
-
-plotHandles = [];
-legendEntries = {};
-
-% Plot LEO SNR
-for i = 1:leoNum
-    h = plot(snrTimeline.Time, snrTimeline.(sprintf('LEO%d', i)), '-o');
-    plotHandles(end+1) = h;
-    legendEntries{end+1} = sprintf('LEO-%d', i);
-end
-
-
-xlabel('Time'); ylabel('Avg SNR (dB)');
-title('Replay: SNR Over Time');
-legend(plotHandles, legendEntries, 'Location', 'northeastoutside');
-grid on;
-hold off;
-
 

@@ -41,6 +41,7 @@ fprintf('First pass complete. Found %d valid samples with any access.\n', validS
 fprintf('Pre-allocating data structures (including cross-links)...\n');
 logData = struct();
 logData.Time = NaT(validSamples, 1);
+logData.Time.TimeZone = 'Australia/Sydney'; % Set time zone
 logData.LEO = struct();
 
 % LEO satellites
@@ -55,13 +56,8 @@ for i = 1:leoNum
     logData.LEO(i).Thrpt = NaN(validSamples, numel(leoGsList));
     logData.LEO(i).BER_QPSK = NaN(validSamples, numel(leoGsList));
     logData.LEO(i).BER_MQAM = NaN(validSamples, numel(leoGsList));
+    logData.LEO(i).Latency = NaN(validSamples, numel(leoGsList));
+    logData.LEO(i).TimeOut = NaT(validSamples, numel(leoGsList));
+    % Set the time zone for the entire array to Australia/Sydney
+    logData.LEO(i).TimeOut.TimeZone = 'Australia/Sydney';
 end
-
-
-% Time-series SNR per satellite
-snrTimeline = struct();
-for i = 1:leoNum
-    snrTimeline.(sprintf('LEO%d', i)) = [];
-    snrTimeline.(sprintf('LEO%d_XL', i)) = [];
-end
-snrTimeline.Time = datetime.empty;

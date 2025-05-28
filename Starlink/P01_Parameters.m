@@ -18,6 +18,7 @@ end
 %% General Simulation Parameters
 fprintf('Initializing simulation parameters...\n');
 startTime = datetime(2025, 4, 10, 12, 0, 0);  % Simulation start
+startTime = datetime(2025, 4, 10, 12, 0, 0, 'TimeZone', 'Australia/Sydney');  % Start time in Sydney local time
 duration_sec = 60 * 1;                   % 30 min simulation in seconds
 sampleTime = 60;                             % Time step in seconds
 stopTime = startTime + seconds(duration_sec);
@@ -58,7 +59,7 @@ tempK = 293;                      % System noise temperature [K]
 %% LEO Walker-Delta Constellation Parameters
 walker.a = 547e3 + EarthRadius;     % Semi-major axis: 650 km altitude
 walker.Inc = 53;                  % Inclination in degrees (typical for Starlink)
-walker.NPlanes = 72;               % Number of orbital planes (original 18)
-walker.SatsPerPlane = 22;          % Number of satellites per plane (original 49)
+walker.NPlanes = 4;               % Number of orbital planes (original 18)
+walker.SatsPerPlane = 4;          % Number of satellites per plane (original 49)
 walker.PhaseOffset = 1;            % Phase offset for phasing between planes
 leoNum = walker.NPlanes * walker.SatsPerPlane;
