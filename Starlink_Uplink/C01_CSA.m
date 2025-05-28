@@ -39,7 +39,7 @@ fprintf('CSV saved with %d valid samples: Satellite_Australia_Simulation_Log_sta
 fprintf('=== Simulation Complete ===\n');
 %% Save Simulation State
 fprintf('\nSaving simulation scenario and log data...\n');
-save('SatelliteSimulationState_starlink.mat', 'sc', 'logData', 'leoSats', 'leoGsList', 'leoTx');
+save('SatelliteSimulationState_starlink.mat', 'sc', 'logData', 'leoSats', 'leoGsList', 'leoRx');
 fprintf('Simulation state saved to SatelliteSimulationState_starlink.mat\n');
 %% Load Simulation State
 fprintf('\nLoading simulation scenario data...\n');
