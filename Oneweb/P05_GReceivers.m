@@ -1,3 +1,4 @@
+%% P05_GReceivers
 %% Receivers on Ground Stations
 fprintf('Setting up ground station receivers...\n');
 fprintf('Setting up dual receivers and gimbals for each ground station...\n');

@@ -1,3 +1,4 @@
+%% P03_SStations
 %% Create GEO and LEO ground statsions
 for i = 1:size(geoCities,1)
     geoGsList{i} = groundStation(sc, geoCities{i,2}, geoCities{i,3}, 'Name', geoCities{i,1});

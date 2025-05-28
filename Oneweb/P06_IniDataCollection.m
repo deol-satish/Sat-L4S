@@ -100,6 +100,7 @@ for i = 1:leoNum
     logData.LEO(i).Access = zeros(validSamples, numel(leoGsList));
     logData.LEO(i).SNR = NaN(validSamples, numel(leoGsList));
     logData.LEO(i).RSSI = NaN(validSamples, numel(leoGsList));
+    logData.LEO(i).Thrpt = NaN(validSamples, numel(leoGsList));
     logData.LEO(i).BER_QPSK = NaN(validSamples, numel(leoGsList));
     logData.LEO(i).BER_MQAM = NaN(validSamples, numel(leoGsList));
 end
