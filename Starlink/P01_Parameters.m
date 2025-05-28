@@ -32,7 +32,7 @@ ts = startTime:seconds(sampleTime):stopTime;
 % Broadband
 
 
-% baseFreq = 1.5e9;          % Base frequency in Hz
+baseFreq = 11.7e9;          % Base frequency in Hz
 
 %% For DownLink
 channelBW = 250e6;  % Each channel 250 MHz wide, typical in Ku-band

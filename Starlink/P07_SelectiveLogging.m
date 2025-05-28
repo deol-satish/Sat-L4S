@@ -42,6 +42,7 @@ for tIdx = tStartIdx:length(ts)
             % fprintf('  LEO-%d Links (%.6f GHz):\n', i, currentLEOFreqs(i)/1e9);
             for gsIdx = 1:numel(leoGsList)
                 pointAt(rxGimbals_LEO(leoGsList{gsIdx}.Name), leoSats(i));
+                pointAt(leoSats(i), leoGsList{gsIdx});
                 linkObj = link(tx, rxReceivers_LEO(leoGsList{gsIdx}.Name));
                 acc = accessStatus(access(leoSats(i), leoGsList{gsIdx}), t);
                 logData.LEO(i).Access(sampleCount, gsIdx) = acc;
