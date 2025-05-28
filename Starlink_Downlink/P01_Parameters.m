@@ -48,7 +48,7 @@ channelFreqs = 1e9 * (10.7 : 0.2 : 12.7);  % 10 channels in Ku downlink band
 leoPower = 10 * log10(20);   % LEO Tx power: 20 W → ~13.01 dBW
 %% Antenna Parameters (Dish Diameter in meters)
 leoAntenna = 0.5;     % LEO satellite antenna diameter
-gsAntenna = 2.4;      % Ground station antenna diameter
+gsAntenna = 0.5;      % Ground station antenna diameter
 %% Multi-path Fading Parameters
 fadingModel = 'Rician';    % Options: 'None', 'Rayleigh', 'Rician'
 ricianK_dB = 10;           % Rician K-factor in dB (K=10: strong LoS)
