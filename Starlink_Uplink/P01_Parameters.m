@@ -46,7 +46,7 @@ channelBW = 150e6;  % 150 MHz
 channelFreqs = 1e9 * (14.0 : 0.05 : 14.5);  % 10 channels across uplink
 
 %% Transmit Power (in dBW)
-leoPower = 10 * log10(20);   % LEO Tx power: 20 W → ~13.01 dBW
+leoPower = 10 * log10(3);   % LEO Tx power: 3 W →  dBW
 %% Antenna Parameters (Dish Diameter in meters)
 leoAntenna = 0.5;     % LEO satellite antenna diameter
 gsAntenna = 2.4;      % Ground station antenna diameter

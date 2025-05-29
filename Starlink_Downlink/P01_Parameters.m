@@ -20,7 +20,7 @@ fprintf('Initializing simulation parameters...\n');
 startTime = datetime(2025, 4, 10, 12, 0, 0);  % Simulation start
 startTime = datetime(2025, 4, 10, 12, 0, 0, 'TimeZone', 'Australia/Sydney');  % Start time in Sydney local time
 duration_sec = 60 * 30;                   % 30 min simulation in seconds
-sampleTime = 30;                             % Time step in seconds
+sampleTime = 1;                             % Time step in seconds
 stopTime = startTime + seconds(duration_sec);
 ts = startTime:seconds(sampleTime):stopTime;
 %% Frequencies (Hz)
@@ -45,8 +45,7 @@ channelFreqs = 1e9 * (10.7 : 0.2 : 12.7);  % 10 channels in Ku downlink band
 % channelFreqs = 1e9 * (14.0 : 0.05 : 14.5);  % 10 channels across uplink
 
 %% Transmit Power (in dBW)
-leoPower = 10 * log10(20);   % LEO Tx power: 20 W → ~13.01 dBW
-leoPower = 10 % in Watts
+leoPower = 10 * log10(10);   % LEO Tx power: 20 W → ~13.01 dBW
 %% Antenna Parameters (Dish Diameter in meters)
 leoAntenna = 0.5;     % LEO satellite antenna diameter
 gsAntenna = 0.5;      % Ground station antenna diameter

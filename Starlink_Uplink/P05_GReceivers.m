@@ -34,7 +34,7 @@ for i = 1:numel(leoGsList)
     % Create transmitter mounted on the SAME gimbal
     leotx = transmitter(txleoGimbal, ...
         'Frequency', channelFreqs(1), ...  % uplink frequency
-        'Power', 3);                % e.g., 3 W
+        'Power', leoPower);                % e.g., 3 W
     gaussianAntenna(leotx, ...
         'DishDiameter', gsAntenna);
     % Point to first LEO satellite as placeholder (dynamic pointing happens during simulation)
