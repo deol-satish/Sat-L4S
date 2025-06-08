@@ -6,6 +6,7 @@ DATA_FOLDER = "G:/Work/Github/LLM/1LLM-Results/LLM_Results_New_Evaluation_with_o
 
 
 SAVE_FORMATS = ['png', 'eps', 'pdf']  # Formats to save graphs
+SAVE_FORMATS = ['png']  # Formats to save graphs
 DPI = 500
 
 # # Color, marker, and linestyle options
