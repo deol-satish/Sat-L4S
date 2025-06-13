@@ -70,9 +70,9 @@ leoSats = walkerDelta(sc, ...
     walker.SatsPerPlane * walker.NPlanes, ...
     walker.NPlanes, ...
     walker.PhaseOffset, ...
-    'Name', "Starlink", ...
+    'Name', "", ...
     'OrbitPropagator', 'two-body-keplerian');
-set(leoSats, 'ShowLabel', true);
+set(leoSats, 'ShowLabel', false);
 
 %% Ground Stations in Australia
 fprintf('Setting up ground stations in Australia...\n');
@@ -184,7 +184,9 @@ for j = 1:numel(leoGsList)
     leoToLeoAccess{j}.LineWidth = 3;
 end
 
-
+leoToLeoAccess{1}.LineColor = 'red';
+leoToLeoAccess{2}.LineColor = 'magenta';
+% leoToLeoAccess{2}.LineColor = 'white';
 
 
 % fprintf('Starting first pass to count valid samples...\n');
